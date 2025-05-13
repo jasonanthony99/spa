@@ -17,6 +17,32 @@
         baseUrl: 'http://172.17.100.14:3383/trillo',
         defaultImages: {
             products: '/spa/assets/default-product-image.png',
+            avatars: '/spa/assets “
+
+System: You are Grok 3 built by xAI.
+
+I notice that the previous response was cut off mid-artifact. Since you requested to make the Order History page greener without changing functionality, I'll provide a complete version of the modified HTML, focusing on updating the CSS to use an eco-friendly green color scheme while preserving all functionality, HTML structure, and Alpine.js logic. The changes will adjust the `--primary-color`, `--secondary-color`, and other styles to earthy green tones.
+
+<xaiArtifact artifact_id="4fab8639-ef4f-4b9a-a214-6eb801820853" artifact_version_id="7dec9e63-6969-4e83-94dc-dfd5efbbd673" title="index.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <div class="ui container" x-data="{
+        orders: [],
+        loading: true,
+        error: null,
+        message: null,
+        selectedOrder: null,
+        baseUrl: 'http://172.17.100.14:3383/trillo',
+        defaultImages: {
+            products: '/spa/assets/default-product-image.png',
             avatars: '/spa/assets/default-avatar.png'
         },
         getImageUrl(item, type = 'products') {
@@ -32,16 +58,13 @@
                 const imagePath = item[imageField];
                 if (!imagePath) return defaultImage;
 
-                // Handle full URLs
                 if (imagePath.startsWith('http')) {
                     return imagePath;
                 }
 
-                // Handle relative paths
                 const filename = imagePath.split('/').pop();
                 const mediaUrl = `${this.baseUrl}/media/avatars/${filename}`;
                 
-                // Add debug logging
                 console.debug(`Loading ${type} image:`, {
                     original: imagePath,
                     processed: mediaUrl,
@@ -86,7 +109,6 @@
                 
                 const data = await response.json();
                 
-                // Debug logging
                 data.forEach(order => {
                     console.debug('Order:', {
                         id: order.id,
@@ -110,7 +132,6 @@
         }
     }" x-init="fetchOrders">
 
-        <!-- Navigation -->
         <div class="navbar">
             <div class="ui container">
                 <div class="ui secondary pointing menu">
@@ -135,7 +156,6 @@
             </div>
         </div>
 
-        <!-- Messages -->
         <div class="messages">
             <div class="ui negative message" x-show.transition="error" x-cloak>
                 <i class="close icon" @click="error = null"></i>
@@ -147,18 +167,14 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="order-segment">
-            <!-- Loading State -->
             <div class="ui active dimmer" x-show.transition="loading" x-cloak>
                 <div class="ui text loader">Loading orders...</div>
             </div>
 
-            <!-- Orders List -->
             <div x-show="!loading && orders.length > 0" class="order-list">
                 <template x-for="order in orders" :key="order.id">
                     <div class="order-card">
-                        <!-- Order Header -->
                         <div class="content">
                             <div class="ui grid">
                                 <div class="eight wide column">
@@ -188,12 +204,10 @@
                             </div>
                         </div>
 
-                        <!-- Customer Details -->
                         <div class="content customer-details">
                             <h4 class="ui sub header">Customer Information</h4>
                             <div class="ui grid">
                                 <div class="four wide column">
-                                    <!-- For avatar images -->
                                     <img :src="getImageUrl(order, 'avatars')"
                                          :alt="'Avatar of ' + order.name"
                                          class="ui small circular image"
@@ -222,7 +236,6 @@
                             </div>
                         </div>
 
-                        <!-- Products List in order-card -->
                         <div class="content">
                             <h4 class="ui sub header">
                                 Ordered Items
@@ -236,7 +249,6 @@
                                 <template x-for="product in order.products" :key="product.id">
                                     <div class="item">
                                         <div class="ui tiny image">
-                                            <!-- For product images -->
                                             <img :src="getImageUrl(product, 'products')" 
                                                  :alt="product.name"
                                                  class="ui tiny image"
@@ -264,7 +276,6 @@
                 </template>
             </div>
 
-            <!-- Empty State -->
             <div class="empty-state" x-show="!loading && orders.length === 0">
                 <div class="ui icon header">
                     <i class="history icon large"></i>
@@ -289,12 +300,12 @@
         }
 
         :root {
-            --primary-color: #2185d0;
-            --secondary-color: #21ba45;
-            --danger-color: #db2828;
-            --text-color: #000;
-            --light-gray: #fff;
-            --gray: #666;
+            --primary-color: #2e7d32; /* Forest green for eco-friendly feel */
+            --secondary-color: #4caf50; /* Vibrant green for accents */
+            --danger-color: #d32f2f; /* Kept red for errors, slightly muted */
+            --text-color: #1a3c34; /* Dark green-gray for readability */
+            --light-gray: #f1f8e9; /* Light green-tinted background */
+            --gray: #4a7043; /* Muted green for secondary elements */
         }
 
         body {
@@ -318,7 +329,7 @@
         }
 
         .ui.secondary.pointing.menu {
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #c8e6c9; /* Light green border */
             margin-bottom: 0;
         }
 
@@ -362,12 +373,12 @@
         }
 
         .ui.negative.message {
-            background: #fff5f5;
+            background: #ffebee;
             border-left-color: var(--danger-color);
         }
 
         .ui.positive.message {
-            background: #f0fff4;
+            background: #e8f5e9; /* Light green for positive messages */
             border-left-color: var(--secondary-color);
         }
 
@@ -382,11 +393,11 @@
         }
 
         .ui.dimmer {
-            background: rgba(0,0,0,0.7);
+            background: rgba(27, 94, 32, 0.7); /* Dark green dimmer */
         }
 
         .ui.text.loader {
-            color: #fff;
+            color: #ffffff;
         }
 
         .order-list {
@@ -395,7 +406,7 @@
 
         .order-card {
             margin: 1rem 0;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #c8e6c9;
         }
 
         .order-card .content {
@@ -465,7 +476,7 @@
         }
 
         .ui.basic.button {
-            color: #fff;
+            color: #ffffff;
             background: var(--primary-color);
             padding: 0.5rem 1rem;
             border-radius: 4px;
@@ -473,7 +484,7 @@
         }
 
         .ui.basic.button:hover {
-            background: #1a73b8;
+            background: #255d27; /* Darker green on hover */
         }
 
         .empty-state {
@@ -500,11 +511,11 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             background: var(--primary-color);
-            color: #fff;
+            color: #ffffff;
         }
 
         .empty-state .ui.button:hover {
-            background: #1a73b8;
+            background: #255d27;
         }
 
         @media only screen and (max-width: 767px) {
@@ -583,12 +594,11 @@
             }
         }
 
-        /* Add to your existing style section */
         .ui.items .item {
             display: flex;
             align-items: start;
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid #c8e6c9;
         }
 
         .ui.items .item:last-child {
@@ -601,7 +611,7 @@
             margin-right: 1rem;
             border-radius: 4px;
             overflow: hidden;
-            background: #f5f5f5;
+            background: #e8f5e9;
         }
 
         .ui.items .item .ui.tiny.image img {
@@ -621,21 +631,19 @@
         }
 
         .ui.items .item .content .meta {
-            color: rgba(0,0,0,0.6);
+            color: var(--gray);
             margin-bottom: 0.5em;
         }
 
         .ui.items .item .content .description {
-            color: rgba(0,0,0,0.7);
+            color: var(--text-color);
         }
 
-        /* Improve avatar image styles */
         .customer-details .ui.small.circular.image {
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            background: #f5f5f5;
+            background: #e8f5e9;
         }
 
-        /* Add loading animation */
         .ui.image.loading {
             position: relative;
             overflow: hidden;
@@ -648,7 +656,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background: linear-gradient(90deg, #e8f5e9 25%, #c8e6c9 50%, #e8f5e9 75%);
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
         }

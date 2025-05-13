@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Eco-Friendly Shopping Cart</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="preload" href="/spa/assets/fonts/icons.woff2" as="font" type="font/woff2" crossorigin>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -116,42 +116,42 @@
             getImageUrl(product) {
                 if (!product?.image_url) {
                     console.warn('No image URL for:', product?.name);
-                    return '/spa/assets/default-product-image.png';
+                    return '/spa/assets/eco-placeholder.png';
                 }
                 try {
                     const url = new URL(product.image_url);
                     return `${this.baseUrl}/media/products/${url.pathname.split('/').pop()}`;
                 } catch (e) {
                     console.error('Invalid image URL:', product?.image_url);
-                    return '/spa/assets/default-product-image.png';
+                    return '/spa/assets/eco-placeholder.png';
                 }
             }
          }"
          x-init="fetchCart">
 
         <!-- Navigation -->
-        <div class="ui top attached menu">
-            <a href="index.html#product/product_display" class="item">Products</a>
-            <div class="active right item">Cart</div>
+        <div class="ui top attached menu" style="background-color: #F1F8E9; border-bottom: 2px solid #2E7D32;">
+            <a href="index.html#product/product_display" class="item" style="color: #2E7D32;">Products</a>
+            <div class="active right item" style="color: #2E7D32;">Cart</div>
         </div>
 
-        <div class="ui attached segment">
-            <h2 class="ui header">Shopping Cart</h2>
+        <div class="ui attached segment" style="background-color: #F1F8E9; border: 1px solid #A5D6A7;">
+            <h2 class="ui header" style="color: #2E7D32;">Eco-Friendly Shopping Cart</h2>
 
             <!-- Messages -->
-            <div class="ui negative message" x-show="error" x-cloak>
+            <div class="ui negative message" x-show="error" x-cloak style="background-color: #FFEBEE; color: #B71C1C;">
                 <i class="close icon" @click="error = null"></i>
                 <div class="content" x-text="error"></div>
             </div>
 
-            <div class="ui positive message" x-show="message" x-cloak>
+            <div class="ui positive message" x-show="message" x-cloak style="background-color: #E8F5E9; color: #2E7D32;">
                 <i class="close icon" @click="message = null"></i>
                 <div class="content" x-text="message"></div>
             </div>
 
             <!-- Loading State -->
-            <div class="ui active dimmer" x-show="loading" x-cloak>
-                <div class="ui loader"></div>
+            <div class="ui active dimmer" x-show="loading" x-cloak style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="ui loader" style="background-color: #A5D6A7;"></div>
             </div>
 
             <!-- Cart Items -->
@@ -171,39 +171,42 @@
                                  loading="lazy"
                                  @error="(e) => {
                                      console.error('Image load error:', item.product.name);
-                                     e.target.src = '/spa/assets/default-product-image.png';
+                                     e.target.src = '/spa/assets/eco-placeholder.png';
                                  }">
                         </div>
                         <div class="content">
-                            <div class="header" x-text="item.product.name"></div>
+                            <div class="header" x-text="item.product.name" style="color: #2E7D32;"></div>
                             <div class="meta">
                                 <div class="ui small basic icon buttons">
                                     <button class="ui button" 
                                             @click="updateQuantity(item, item.quantity - 1)"
-                                            :class="{ 'disabled': item.quantity <= 1 }">
+                                            :class="{ 'disabled': item.quantity <= 1 }"
+                                            style="background-color: #E8F5E9; color: #2E7D32;">
                                         <i class="minus icon"></i>
                                     </button>
-                                    <div class="ui button">
+                                    <div class="ui button" style="background-color: #E8F5E9; color: #2E7D32;">
                                         <span x-text="item.quantity"></span>
                                     </div>
                                     <button class="ui button"
                                             @click="updateQuantity(item, item.quantity + 1)"
-                                            :class="{ 'disabled': item.quantity >= item.product.stock }">
+                                            :class="{ 'disabled': item.quantity >= item.product.stock }"
+                                            style="background-color: #E8F5E9; color: #2E7D32;">
                                         <i class="plus icon"></i>
                                     </button>
                                 </div>
                                 <span class="stock-info" 
                                       x-text="'Available: ' + item.product.stock"
-                                      style="margin-left: 1em; color: #666;">
+                                      style="margin-left: 1em; color: #8D6E63;">
                                 </span>
                             </div>
                             <div class="description">
-                                <p x-text="item.product.description"></p>
+                                <p x-text="item.product.description" style="color: #4A4A4A;"></p>
                             </div>
                             <div class="extra">
-                                <span x-text="'Total: $' + item.total_price"></span>
+                                <span x-text="'Total: $' + item.total_price" style="color: #2E7D32;"></span>
                                 <button class="ui negative right floated button"
-                                        @click="removeItem(item.id)">
+                                        @click="removeItem(item.id)"
+                                        style="background-color: #B71C1C; color: #FFF;">
                                     Remove
                                 </button>
                             </div>
@@ -213,50 +216,63 @@
             </div>
 
             <!-- Cart Summary -->
-            <div class="ui segment" x-show="!loading && cartItems.length > 0">
+            <div class="ui segment" x-show="!loading && cartItems.length > 0" style="background-color: #E8F5E9; border: 1px solid #A5D6A7;">
                 <div class="ui two statistics">
                     <div class="statistic">
-                        <div class="value" x-text="'$' + totalAmount.toFixed(2)"></div>
-                        <div class="label">Cart Total</div>
+                        <div class="value" x-text="'$' + totalAmount.toFixed(2)" style="color: #2E7D32;"></div>
+                        <div class="label" style="color: #8D6E63;">Cart Total</div>
                     </div>
                     <div class="statistic">
-                        <div class="value" x-text="'$' + selectedTotal.toFixed(2)"></div>
-                        <div class="label">Selected Items Total</div>
+                        <div class="value" x-text="'$' + selectedTotal.toFixed(2)" style="color: #2E7D32;"></div>
+                        <div class="label" style="color: #8D6E63;">Selected Items Total</div>
                     </div>
                 </div>
                 <div class="ui divider"></div>
+                <div class="ui green message" style="background-color: #E8F5E9; color: #2E7D32;">
+                    <i class="leaf icon"></i> Shop sustainably with eco-friendly products!
+                </div>
                 <button class="ui primary fluid button" 
                         @click="proceedToCheckout"
-                        :class="{ 'disabled': selectedItems.length === 0 }">
+                        :class="{ 'disabled': selectedItems.length === 0 }"
+                        style="background-color: #2E7D32; color: #FFF;">
                     Checkout Selected Items (<span x-text="selectedItems.length"></span>)
                 </button>
             </div>
 
             <!-- Empty Cart Message -->
-            <div class="ui placeholder segment" x-show="!loading && cartItems.length === 0">
-                <div class="ui icon header">
+            <div class="ui placeholder segment" x-show="!loading && cartItems.length === 0" style="background-color: #F1F8E9; border: 1px solid #A5D6A7;">
+                <div class="ui icon header" style="color: #2E7D32;">
                     <i class="cart icon"></i>
                     Your cart is empty
                 </div>
-                <a href="index.html#product/product_display" class="ui primary button">Continue Shopping</a>
+                <a href="index.html#product/product_display" class="ui primary button" style="background-color: #2E7D32; color: #FFF;">Continue Shopping</a>
             </div>
         </div>
     </div>
 
     <style>
-        .item.selected {
-            background-color: #f8ffff;
-            border-left: 3px solid #2185d0;
-            padding-left: 1em;
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #F1F8E9;
         }
+
+        .item.selected {
+            background-color: #E8F5E9;
+            border-left: 3px solid #2E7D32;
+            padding-left: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .ui.checkbox {
             margin-top: 1em;
         }
+
         .ui.small.basic.icon.buttons {
             margin-top: 0.5em;
         }
+
         .stock-info {
-            color: #666;
+            color: #8D6E63;
             font-size: 0.9em;
         }
 
@@ -264,8 +280,9 @@
             width: 150px !important;
             height: 150px !important;
             object-fit: cover;
-            background: #f5f5f5;
+            background: #E8F5E9;
             border-radius: 4px;
+            border: 1px solid #A5D6A7;
         }
 
         [x-cloak] { 
@@ -277,6 +294,18 @@
             font-display: swap;
             src: local('Icons'),
                  url('/spa/assets/fonts/icons.woff2') format('woff2');
+        }
+
+        .ui.button, .ui.buttons .button {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .ui.button:hover {
+            filter: brightness(110%);
+        }
+
+        .ui.divider {
+            border-top: 1px solid #A5D6A7;
         }
     </style>
 </body>

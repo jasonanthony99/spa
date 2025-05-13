@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>Add Eco-Product</title>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/themes/default/assets/fonts/icons.woff2" as="font" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2" as="font" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" crossorigin>
     
     <!-- Semantic UI with local fallback -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" 
@@ -18,32 +18,159 @@
             onerror="this.onerror=null;this.src='/spa/assets/alpine.min.js';"></script>
 
     <style>
+        /* Green world theme */
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #aed581;
+            --pale-green: #e8f5e9;
+            --accent-green: #388e3c;
+            --dark-green: #1b5e20;
+            --earth-brown: #795548;
+            --sky-blue: #81d4fa;
+        }
+        
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--pale-green);
+            background-image: linear-gradient(120deg, var(--pale-green), #f1f8e9);
+            min-height: 100vh;
+            color: #333;
+        }
+        
         .preview-image {
             max-width: 200px;
             max-height: 200px;
             margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
+        
         .error-text {
-            color: #db2828;
+            color: #c62828;
             font-size: 0.9em;
             margin-top: 5px;
         }
         
-        /* Font fallbacks */
-        @font-face {
-            font-family: 'Lato';
-            font-display: swap;
-            src: local('Lato Regular'), local('Lato-Regular'),
-                 url('https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2') format('woff2');
+        .eco-card {
+            border-radius: 12px !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+            border: none !important;
+            overflow: hidden;
+            background-color: #fff !important;
         }
         
-        body {
-            font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        .eco-header {
+            background-color: var(--primary-green) !important;
+            color: white !important;
+            padding: 1.5rem !important;
+            font-size: 1.4rem !important;
+            border-bottom: none !important;
+        }
+        
+        .eco-content {
+            padding: 2rem !important;
+        }
+        
+        .eco-button {
+            background-color: var(--primary-green) !important;
+            color: white !important;
+            border-radius: 30px !important;
+            font-weight: 500 !important;
+            padding: 0.8rem 1.5rem !important;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+        
+        .eco-button:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(46, 125, 50, 0.4) !important;
+        }
+        
+        .eco-upload-button {
+            background-color: var(--light-green) !important;
+            color: var(--dark-green) !important;
+            border-radius: 30px !important;
+            padding: 0.8rem 1.5rem !important;
+        }
+        
+        .eco-upload-label {
+            background-color: #f1f8e9 !important;
+            color: var(--dark-green) !important;
+            border: 1px dashed var(--light-green) !important;
+            border-radius: 0 30px 30px 0 !important;
+        }
+        
+        .eco-input {
+            border: 2px solid var(--light-green) !important;
+            border-radius: 8px !important;
+            transition: border-color 0.3s !important;
+        }
+        
+        .eco-input:focus {
+            border-color: var(--primary-green) !important;
+        }
+        
+        .eco-label {
+            color: var(--dark-green) !important;
+            font-weight: 500 !important;
+            font-size: 1rem !important;
+        }
+        
+        .eco-dollar {
+            background-color: var(--light-green) !important;
+            color: var(--dark-green) !important;
+            border-radius: 8px 0 0 8px !important;
+        }
+        
+        .preview-container {
+            background-color: #f1f8e9 !important;
+            border-radius: 8px !important;
+            border: 1px dashed var(--light-green) !important;
+        }
+        
+        .leaf-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .success-message {
+            background-color: #c8e6c9 !important;
+            color: var(--dark-green) !important;
+            border-left: 4px solid var(--primary-green) !important;
+            border-radius: 4px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        .error-message {
+            background-color: #ffcdd2 !important;
+            color: #b71c1c !important;
+            border-left: 4px solid #c62828 !important;
+            border-radius: 4px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+        }
+        
+        /* Font fallbacks */
+        @font-face {
+            font-family: 'Poppins';
+            font-display: swap;
+            src: local('Poppins Regular'), local('Poppins-Regular'),
+                 url('https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2') format('woff2');
         }
     </style>
 </head>
 <body>
-    <div class="ui container" style="padding: 2rem;">
+    <div class="ui container" style="padding: 3rem 2rem;">
         <div x-data="{
             baseUrl: 'http://172.17.100.14:3383/trillo',
             product: {
@@ -173,90 +300,97 @@
                 document.getElementById('imageInput').value = '';
             }
         }">
-            <div class="ui card fluid">
-                <div class="content">
-                    <div class="header">Add New Product</div>
+            <div class="ui card fluid eco-card">
+                <div class="content eco-header">
+                    <i class="leaf icon" style="margin-right: 10px;"></i>
+                    Add New Eco-Product
                 </div>
                 
-                <div class="content">
+                <div class="content eco-content">
                     <form class="ui form" x-on:submit.prevent="addProduct" enctype="multipart/form-data">
                         <!-- Product Name -->
                         <div class="field" x-bind:class="{ 'error': errors.name }">
-                            <label>Product Name</label>
-                            <input type="text" x-model="product.name" placeholder="Enter product name" required>
+                            <label class="eco-label">Product Name</label>
+                            <div class="ui input">
+                                <input type="text" x-model="product.name" placeholder="Enter eco-friendly product name" required class="eco-input">
+                            </div>
                             <div class="error-text" x-show="errors.name" x-text="errors.name"></div>
                         </div>
 
                         <!-- Description -->
                         <div class="field">
-                            <label>Description</label>
-                            <textarea x-model="product.description" rows="3"></textarea>
+                            <label class="eco-label">Description</label>
+                            <textarea x-model="product.description" rows="3" placeholder="Describe your sustainable product" class="eco-input"></textarea>
                         </div>
 
                         <!-- Price and Stock -->
                         <div class="two fields">
                             <div class="field" x-bind:class="{ 'error': errors.price }">
-                                <label>Price</label>
+                                <label class="eco-label">Price</label>
                                 <div class="ui right labeled input">
-                                    <div class="ui label">$</div>
-                                    <input type="number" step="0.01" min="0.01" x-model="product.price" required>
+                                    <div class="ui label eco-dollar">$</div>
+                                    <input type="number" step="0.01" min="0.01" x-model="product.price" required class="eco-input">
                                 </div>
                                 <div class="error-text" x-show="errors.price" x-text="errors.price"></div>
                             </div>
                             <div class="field" x-bind:class="{ 'error': errors.stock }">
-                                <label>Stock</label>
-                                <input type="number" min="0" x-model="product.stock" required>
+                                <label class="eco-label">Stock</label>
+                                <div class="ui input">
+                                    <input type="number" min="0" x-model="product.stock" required class="eco-input">
+                                </div>
                                 <div class="error-text" x-show="errors.stock" x-text="errors.stock"></div>
                             </div>
                         </div>
 
                         <!-- Image Upload -->
                         <div class="field" x-bind:class="{ 'error': errors.image }">
-                            <label>Product Image</label>
+                            <label class="eco-label">Product Image</label>
                             <div class="ui action input">
                                 <input type="file" 
                                        id="imageInput"
                                        accept="image/jpeg,image/png"
                                        @change="handleImageUpload"
                                        style="display: none">
-                                <label for="imageInput" class="ui icon button">
-                                    <i class="upload icon"></i>
+                                <label for="imageInput" class="ui icon button eco-upload-button">
+                                    <i class="leaf icon"></i>
                                     Choose Image
                                 </label>
-                                <div class="ui basic label" x-text="product.image ? product.image.name : 'No file chosen'"></div>
+                                <div class="ui basic label eco-upload-label" x-text="product.image ? product.image.name : 'No file chosen'"></div>
                             </div>
                             <div class="error-text" x-show="errors.image" x-text="errors.image"></div>
                             
                             <!-- Image Preview -->
-                            <div x-show="imagePreview" class="ui segment" style="margin-top: 1rem; position: relative;">
+                            <div x-show="imagePreview" class="ui segment preview-container" style="margin-top: 1rem; position: relative;">
                                 <img :src="imagePreview" 
                                      class="preview-image"
                                      style="max-width: 200px; max-height: 200px; object-fit: contain;">
                                 <button type="button"
-                                        class="ui red mini icon button"
+                                        class="ui mini icon button"
                                         @click.prevent="clearImage"
-                                        style="position: absolute; top: 0.5rem; right: 0.5rem;">
+                                        style="position: absolute; top: 0.5rem; right: 0.5rem; background-color: #ffcdd2; color: #b71c1c;">
                                     <i class="times icon"></i>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Submit Button -->
-                        <button class="ui primary fluid button" 
-                                x-bind:class="{ 'loading': loading, 'disabled': loading }"
-                                type="submit">
-                            Add Product
-                        </button>
+                        <div style="position: relative; margin-top: 2rem; padding-top: 1rem;">
+                            <button class="ui fluid button eco-button" 
+                                    x-bind:class="{ 'loading': loading, 'disabled': loading }"
+                                    type="submit">
+                                <i class="seedling icon"></i> Add Sustainable Product
+                            </button>
+                        </div>
                     </form>
                 </div>
 
                 <!-- Message Display -->
-                <div class="extra content" x-show="message">
+                <div class="extra content" x-show="message" style="padding: 1rem;">
                     <div class="ui message" 
                          x-text="message"
                          x-bind:class="{ 
-                             'positive': message.includes('successfully'), 
-                             'negative': message.includes('Error') || message.includes('Failed') 
+                             'success-message': message.includes('successfully'), 
+                             'error-message': message.includes('Error') || message.includes('Failed') 
                          }">
                     </div>
                 </div>

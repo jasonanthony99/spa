@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Display</title>
+    <title>Eco Products Display</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preload" href="/spa/assets/fonts/icons.woff2" as="font" type="font/woff2" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'Icons';
@@ -16,34 +16,46 @@
                  url('/spa/assets/fonts/icons.woff2') format('woff2');
         }
         :root {
-            --primary-color: #1d4ed8; /* Professional blue */
-            --secondary-color: #15803d; /* Deep green */
-            --danger-color: #b91c1c; /* Refined red */
-            --text-color: #111827; /* Dark gray for readability */
-            --background-color: #f9fafb; /* Soft neutral background */
+            --primary-green: #2e7d32; /* Deep forest green */
+            --secondary-green: #388e3c; /* Medium green */
+            --light-green: #a5d6a7; /* Soft leaf green */
+            --pale-green: #e8f5e9; /* Lightest mint green */
+            --accent-green: #43a047; /* Vibrant green */
+            --earth-brown: #795548; /* Natural brown */
+            --wood-tan: #d7ccc8; /* Light wood color */
+            --leaf-green: #66bb6a; /* Fresh leaf green */
+            --water-blue: #81d4fa; /* Clear water blue */
+            --forest-dark: #1b5e20; /* Dark forest green */
+            --text-color: #33691e; /* Dark green text */
+            --text-light: #558b2f; /* Medium green text */
+            --background-color: #f1f8e9; /* Light greenish background */
             --card-background: #ffffff;
-            --border-color: #e5e7eb;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --border-color: #c8e6c9;
+            --shadow-sm: 0 2px 8px rgba(46, 125, 50, 0.1);
+            --shadow-md: 0 4px 16px rgba(46, 125, 50, 0.15);
+            --shadow-lg: 0 8px 24px rgba(46, 125, 50, 0.2);
         }
         * {
             box-sizing: border-box;
         }
         body {
             background-color: var(--background-color);
+            background-image: linear-gradient(135deg, var(--pale-green), var(--background-color));
             color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.5;
             margin: 0;
             font-size: 16px;
+            min-height: 100vh;
         }
         .navbar {
-            background: var(--card-background);
-            box-shadow: var(--shadow-sm);
+            background: var(--primary-green);
+            box-shadow: var(--shadow-md);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            color: white;
         }
         .navbar .ui.container {
             display: flex;
@@ -55,26 +67,32 @@
             align-items: center;
             font-size: 1.75rem;
             font-weight: 700;
-            color: var(--text-color);
+            color: white;
             margin: 0;
         }
         .navbar .ui.header .icon {
             margin-right: 0.5rem;
-            color: var(--primary-color);
+            color: var(--light-green);
         }
         .navbar .ui.button {
-            border-radius: 8px;
+            border-radius: 30px;
             padding: 0.75rem 1.5rem;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            background-color: var(--accent-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .navbar .ui.button.negative {
+            background-color: #e57373;
         }
         .navbar .ui.button:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
         }
         .product-grid {
             margin: 2rem 0;
@@ -82,71 +100,76 @@
         }
         .product-card {
             background: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-radius: 12px !important;
+            border: none !important;
+            border-radius: 16px !important;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
         }
         .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
         .image-container {
             width: 100%;
             height: 240px; /* Fixed height for uniform images */
             overflow: hidden;
-            background: #f3f4f6;
+            background: var(--pale-green);
             position: relative;
         }
         .product-image {
             object-fit: cover;
             object-position: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
         }
-        .product-image:hover {
-            transform: scale(1.05);
+        .product-card:hover .product-image {
+            transform: scale(1.08);
         }
         .product-header {
             font-size: 1.3rem;
             font-weight: 600;
-            color: var(--text-color);
+            color: var(--forest-dark);
             margin: 1rem 0 0.5rem;
         }
         .price-tag {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary-green);
         }
         .stock-badge {
-            background: var(--secondary-color);
+            background: var(--leaf-green);
             color: white;
             padding: 0.35rem 1rem;
-            border-radius: 9999px;
+            border-radius: 30px;
             font-size: 0.85rem;
             margin-left: 0.75rem;
             font-weight: 500;
+            box-shadow: 0 2px 8px rgba(102, 187, 106, 0.3);
         }
         .cart-badge {
             position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--danger-color);
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-green);
             color: white;
             border-radius: 50%;
-            padding: 0.65rem;
-            font-size: 0.95rem;
-            box-shadow: var(--shadow-md);
-            transition: transform 0.3s ease, background 0.3s ease;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 100;
         }
         .cart-badge:hover {
-            transform: scale(1.1);
-            background: #991b1b;
+            transform: scale(1.1) rotate(10deg);
+            background: var(--secondary-green);
         }
         .edit-controls {
             background: var(--card-background);
@@ -156,44 +179,67 @@
             margin-bottom: 2rem;
         }
         .add-to-cart-btn {
-            border-radius: 8px;
-            padding: 0.85rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            border-radius: 30px !important;
+            padding: 0.85rem !important;
+            font-weight: 500 !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+            background-color: var(--primary-green) !important;
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3) !important;
         }
         .add-to-cart-btn:hover:not(.disabled) {
-            transform: translateY(-2px);
-            background: #1e3a8a;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(46, 125, 50, 0.4) !important;
+            background-color: var(--secondary-green) !important;
         }
         .add-to-cart-btn.disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
+            cursor: not-allowed !important;
+            opacity: 0.6 !important;
+            background-color: #90a4ae !important;
+        }
+        .delete-btn {
+            border-radius: 30px !important;
+            background-color: #ef5350 !important;
+            box-shadow: 0 4px 12px rgba(239, 83, 80, 0.3) !important;
+        }
+        .delete-btn:hover {
+            background-color: #e53935 !important;
+            box-shadow: 0 6px 16px rgba(239, 83, 80, 0.4) !important;
         }
         [x-cloak] {
             display: none !important;
         }
         .messages {
             position: fixed;
-            top: 1.5rem;
+            top: 5rem;
             right: 1.5rem;
             z-index: 1000;
             min-width: 320px;
         }
         .messages .ui.message {
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow-md);
             padding: 1rem 1.5rem;
             font-weight: 500;
             font-size: 0.95rem;
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.4s ease;
             display: flex;
             align-items: center;
             gap: 1rem;
+            border: none;
+        }
+        .messages .ui.positive.message {
+            background-color: #c8e6c9;
+            color: var(--forest-dark);
+        }
+        .messages .ui.negative.message {
+            background-color: #ffcdd2;
+            color: #b71c1c;
         }
         .messages .ui.message .close.icon {
             cursor: pointer;
@@ -218,27 +264,99 @@
         }
         .ui.form label {
             font-weight: 500;
-            color: var(--text-color);
+            color: var(--forest-dark);
             margin-bottom: 0.5rem;
             display: block;
         }
         .ui.form input {
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            border: 2px solid var(--light-green);
             padding: 0.75rem;
             font-size: 0.95rem;
+            transition: border-color 0.3s;
         }
-        .ui.form .ui.button {
-            border-radius: 6px;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.95rem;
+        .ui.form input:focus {
+            border-color: var(--primary-green);
+        }
+        .ui.right.labeled.input .ui.tag.label {
+            border-radius: 0 8px 8px 0;
+            background-color: var(--accent-green);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .ui.right.labeled.input .ui.tag.label:hover {
+            background-color: var(--primary-green);
         }
         .description {
-            color: #4b5563;
+            color: var(--text-light);
             font-size: 0.9rem;
-            margin-top: 0.5rem;
-            line-height: 1.4;
+            margin-top: 0.75rem;
+            line-height: 1.5;
         }
+        .eco-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .ui.dimmer {
+            background-color: rgba(46, 125, 50, 0.6);
+        }
+        .ui.loader:after {
+            border-color: var(--light-green) transparent transparent;
+        }
+        .leaf-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.15;
+            width: 100%;
+            height: 200px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%232e7d32' fill-opacity='1' d='M0,96L48,90.7C96,85,192,75,288,80C384,85,480,107,576,138.7C672,171,768,213,864,213.3C960,213,1056,171,1152,160C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+        }
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            background-color: var(--card-background);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .empty-state .icon {
+            font-size: 4rem;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: var(--forest-dark);
+            margin-bottom: 1rem;
+        }
+        .empty-state p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
         @media (max-width: 768px) {
             .product-grid {
                 margin: 1.5rem 0;
@@ -253,12 +371,13 @@
                 font-size: 1.3rem;
             }
             .cart-badge {
-                top: 1rem;
-                right: 1rem;
-                padding: 0.5rem;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 50px;
+                height: 50px;
             }
             .messages {
-                top: 1rem;
+                top: 4.5rem;
                 right: 1rem;
                 min-width: 280px;
             }
@@ -292,6 +411,7 @@
     </style>
 </head>
 <body>
+    <div class="leaf-decoration"></div>
     <div class="ui container" x-data="{
             products: [],
             loading: true,
@@ -409,13 +529,13 @@
         <div class="navbar">
             <div class="ui container">
                 <h2 class="ui header">
-                    <i class="shopping bag icon"></i>
-                    <div class="content">Product Store</div>
+                    <i class="leaf icon"></i>
+                    <div class="content">Eco Product Store</div>
                 </h2>
                 <button class="ui button"
-                        x-bind:class="editMode ? 'negative' : 'positive'"
+                        x-bind:class="editMode ? 'negative' : ''"
                         @click="editMode = !editMode">
-                    <i class="edit icon"></i>
+                    <i x-bind:class="editMode ? 'times icon' : 'edit icon'"></i>
                     <span x-text="editMode ? 'Exit Edit Mode' : 'Enter Edit Mode'"></span>
                 </button>
             </div>
@@ -435,22 +555,38 @@
 
         <!-- Cart Badge -->
         <div class="cart-badge" x-show="cartCount > 0" x-cloak>
-            <i class="shopping cart icon"></i>
-            <span x-text="cartCount"></span>
+            <div>
+                <i class="shopping cart icon"></i>
+                <span x-text="cartCount"></span>
+            </div>
         </div>
 
         <!-- Loading State -->
         <div class="ui active dimmer" x-show="loading" x-cloak>
-            <div class="ui loader"></div>
+            <div class="ui text loader">Loading Eco Products...</div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" x-show="!loading && products.length === 0" x-cloak>
+            <i class="leaf icon"></i>
+            <h3>No Eco Products Available</h3>
+            <p>There are no sustainable products available at the moment. Please check back later or add some new products.</p>
+            <a href="/add-product" class="ui button add-to-cart-btn">
+                <i class="plus icon"></i>
+                Add New Eco Product
+            </a>
         </div>
 
         <!-- Products Grid -->
-        <div class="ui three stackable cards product-grid">
+        <div class="ui three stackable cards product-grid" x-show="!loading && products.length > 0">
             <template x-for="product in products" :key="product.id">
                 <div class="ui card product-card"
                      x-data="{ hasError: false }"
                      x-effect="hasError = false">
                     <div class="image-container" x-show="!hasError">
+                        <div class="eco-badge">
+                            <i class="leaf icon"></i> Eco-friendly
+                        </div>
                         <img :src="getImageUrl(product)"
                              :alt="product.name"
                              class="product-image"
@@ -458,6 +594,9 @@
                              @error="hasError = true">
                     </div>
                     <div class="image-container" x-show="hasError">
+                        <div class="eco-badge">
+                            <i class="leaf icon"></i> Eco-friendly
+                        </div>
                         <div class="ui placeholder">
                             <div class="square image"></div>
                         </div>
@@ -468,7 +607,7 @@
                             <span class="price-tag" x-text="formatPrice(product.price)"></span>
                             <span class="stock-badge" x-text="product.stock + ' in stock'"></span>
                         </div>
-                        <div class="description" x-text="product.description"></div>
+                        <div class="description" x-text="product.description || 'An eco-friendly sustainable product made with natural materials.'"></div>
                         <!-- Edit Mode Controls -->
                         <div x-show="editMode" class="ui form" style="margin-top: 1.5rem;">
                             <div class="field">
@@ -484,14 +623,14 @@
                         </div>
                     </div>
                     <div class="extra content">
-                        <button class="ui primary fluid button add-to-cart-btn"
+                        <button class="ui fluid button add-to-cart-btn"
                                 x-show="!editMode"
                                 @click="addToCart(product.id)"
                                 x-bind:class="{ 'disabled': product.stock === 0 }">
                             <i class="cart plus icon"></i>
                             <span x-text="product.stock === 0 ? 'Out of Stock' : 'Add to Cart'"></span>
                         </button>
-                        <button class="ui negative fluid button"
+                        <button class="ui fluid button delete-btn"
                                 x-show="editMode"
                                 @click="deleteProduct(product.id)">
                             <i class="trash icon"></i>
